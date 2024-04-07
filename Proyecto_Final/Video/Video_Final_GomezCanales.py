@@ -39,19 +39,33 @@ class Presentacion(VoiceoverScene):
             self.play(Transform(nombre, titulo), run_time=tracker.duration/4)
         
 
-class Indice(Scene):
+class Indice(VoiceoverScene):
     def construct(self):
+        
+        self.set_speech_service(RecorderService(silence_threshold=-40.0, transcription_model=None))
+        # Imagenes ----------------------------------
         pi_hola = SVGMobject("imgs/hola.svg").shift(RIGHT * 3).flip(UP)
-        titulo_indice = Text("Índice:", color=YELLOW, font_size=70).to_edge(UL)
-        lista = BulletedList("Introducción al Problema", "Conjuntos de Datos", "¿Qué es una GAN?", "Arquitectura", "Resultados").next_to(titulo_indice, DOWN, buff=0.5)
+
+        # Texto ----------------------------------
+        titulo_indice = Text("Índice:", color=YELLOW, font_size=60).to_edge(UL)
+        textos_lista = ["Introducción al Problema", "Conjuntos de Datos", "¿Qué es una GAN?", "Arquitectura", "Resultados", "Conclusiones"]
+        lista = BulletedList(*textos_lista).next_to(titulo_indice, DOWN, buff=0.5)
         lista.shift(RIGHT * 1.5)
         lista.set_color_by_tex("Introducción al Problema", RED)
         lista.set_color_by_tex("Conjuntos de Datos", GREEN)
         lista.set_color_by_tex("¿Qué es una GAN?", GOLD)
         lista.set_color_by_tex("Arquitectura", BLUE)
         lista.set_color_by_tex("Resultados", PURPLE)
+        lista.set_color_by_tex("Conclusiones", TEAL)
 
+
+        # Animar Indice -------------------------------
         self.play(FadeIn(pi_hola), run_time=0.7)
         self.play(FadeIn(titulo_indice))
-        self.play(FadeIn(lista))
-        self.wait(2)
+        with self.voiceover(text="Ahora veremos las secciones en las que está estructurado el video.") as tracker:
+            self.wait(tracker.duration)
+        for line in lista:
+            with self.voiceover(text=str(line)+".") as tracker:
+                self.play(Write(line), run_time=1.5)
+                self.wait(tracker.duration-1.5)
+        
