@@ -5,11 +5,6 @@ from mnist_loader import load_mnist
 from itertools import product, chain
 import numpy as np
 
-# Codigo basado en: 
-# https://www.3blue1brown.com
-# https://www.youtube.com/watch?v=jDe5BAsT2-Y
-# https://github.com/3b1b/videos
-
 # Load mnist data
 (X_train, y_train), (X_test, y_test) = load_mnist()
 
