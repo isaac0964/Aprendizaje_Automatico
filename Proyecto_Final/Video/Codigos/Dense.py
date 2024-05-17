@@ -44,14 +44,14 @@ def softmax(z, derivative=False):
         return a, da
     return a
 
-def load_pretrained_net(path:str="pesos_nn/wb.txt"):
+def load_pretrained_net(path:str="wb.txt"):
     """
     This funcitions loads a pretrained Fully Connected Network with the given weights
     input: path to pretrainded parameters
     ouput: trained FCN
     """
-    data_file = open("pesos_nn/wb.txt", "rb")
-    ws, bs = pickle.load(data_file)
+    data_file = open(path, "rb")
+    ws, bs = pickle.load(data_file, encoding="latin1")
     data_file.close()
     layers_dims = [w.shape[1] for w in ws[1:]]
     layers_dims.append(ws[-1].shape[0])
@@ -86,6 +86,15 @@ class FCN():
         for l in range(1, self.L+1):
             A = self.f[l](self.w[l] @ A + self.b[l])
         return A
+    
+    def get_activations_of_all_layers(self, input_a):
+        activations = [input_a.reshape((input_a.size, 1))]
+        for bias, weight, func in zip(self.b[1:], self.w[1:], self.f[1:]):
+            last_a = activations[-1]
+            new_a = func(np.dot(weight, last_a) + bias)
+            new_a = new_a.reshape((new_a.size, 1))
+            activations.append(new_a)
+        return activations
     
     def fit(self, X, Y, epochs=100, batch_size=1):
         # Gradient Descent
@@ -132,7 +141,7 @@ class FCN():
                     self.w[l] += self.eta/batch_size * (lg[l] @ As[l-1].T)
                     self.b[l] += self.eta/batch_size * np.sum(lg[l], axis=1, keepdims=True)
     # Save net weights and biases
-    def save(self, path="pesos_nn/wb.txt"):
+    def save(self, path="wb.txt"):
         """
         Function for saving weights and biases of net
         """
