@@ -21,7 +21,7 @@ class Incremento(VoiceoverScene):
         title = Text("Presentación del Problema", color=YELLOW).scale(0.9).to_corner(UL)
 
         # Value tracker to update the scene with an x-value
-        vt = ValueTracker(1950)  # Starts at 0
+        vt = ValueTracker(1950)  # Starts at 1950
 
         # Load Figures
         pi_concerned = SVGMobject("../imgs/concerned.svg").scale(0.8).shift(RIGHT * 3, UP*2.5)
@@ -44,9 +44,6 @@ class Incremento(VoiceoverScene):
         f_dot = always_redraw(lambda: Dot(point=ax.c2p(vt.get_value(), f.underlying_function(vt.get_value())), color=BLUE))
 
         # Add number of population above dot
-        #number = DecimalNumber(2.5).set_color(BLUE).scale(0.7)
-        # Add updater to keep number above dot
-        #number.add_updater(lambda: number.next_to(f_dot, UP))
         number = always_redraw(lambda: DecimalNumber(f.underlying_function(vt.get_value())).set_color(BLUE).scale(0.5).next_to(f_dot, UP))
 
         # Add axes labels
