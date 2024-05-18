@@ -6,5 +6,5 @@ net = Dense.load_pretrained_net("Codigos/wb.txt")
 
 print(net.layers)
 
-print(19.5//5)
-print(19.5%5)
+print(round(255/268, 2))
+
