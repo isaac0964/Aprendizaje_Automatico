@@ -32,7 +32,7 @@ class datos(VoiceoverScene, ZoomedScene):
         self.set_speech_service(RecorderService(silence_threshold=-40.0, transcription_model=None))
         # Cargar imagenes y etiquetas
         acaros = ImageMobject("imgs/acaros.jpg").scale(3)
-        acaros_tex = Text("Acaros").next_to(acaros, UP)
+        acaros_tex = Text("Ácaros").next_to(acaros, UP)
 
         afidos = ImageMobject("imgs/aphids.jpg").scale(2)
         afidos_tex = Text("Áfidos").next_to(afidos, UP)

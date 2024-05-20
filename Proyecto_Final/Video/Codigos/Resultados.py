@@ -137,10 +137,10 @@ class Acc(VoiceoverScene):
             self.wait()
             self.wait(tracker.duration-8)
 
-class Metricas(VoiceoverScene):
+class Metrica(VoiceoverScene):
     def construct(self):
         self.set_speech_service(RecorderService(silence_threshold=-40.0, transcription_model=None))
-        title = Text("Metricas").to_corner(UL)
+        title = Text("Métricas").to_corner(UL)
         gm = Tex(r"$\text{GM} = \prod_{i=1}^C  \sqrt[C]{S_i}$", font_size=98)
 
         pi_think = SVGMobject("imgs/thinking.svg").to_edge(UR).flip(UP)
@@ -149,7 +149,7 @@ class Metricas(VoiceoverScene):
 
         metricas = Table([
                         [("Accuracy"), "61"],
-                        ["Precision", "59"],
+                        ["Precisión", "59"],
                         ["Recall", "51"],
                         ["F1", "54"],
                         ["GM", "46.43"]],
